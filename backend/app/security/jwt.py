@@ -7,13 +7,13 @@ import os
 
 load_dotenv()
 
-SECRET_KEY=str(os.getenv("SECRET_KEY"))
-ALGORITHM=str(os.getenv("ALGORITHM"))
+SECRET_KEY=os.getenv("SECRET_KEY")
+ALGORITHM=os.getenv("ALGORITHM")
 
 if not SECRET_KEY or not ALGORITHM:
     raise RuntimeError("SECRET_KEY or ALGORITHM Not Found")
 
-def create_access_token(data:dict,expire_minutes=200):
+def create_access_token(data:dict,expire_minutes=60):
     to_encode=data.copy()
     expire=datetime.utcnow()+timedelta(minutes=expire_minutes)
     to_encode["exp"]=expire

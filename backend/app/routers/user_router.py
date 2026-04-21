@@ -9,7 +9,7 @@ router=APIRouter(prefix="/users",tags=["Users"])
 
 
 @router.get("/me")
-def get_current_user(current_user=Depends(get_current_user),db:Session=Depends(get_db)):
+def get_my_data(current_user=Depends(get_current_user),db:Session=Depends(get_db)):
 
     user=db.query(User).filter(User.id==current_user.id).first()
 
