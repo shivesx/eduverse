@@ -106,22 +106,22 @@ def update_college(college_id:int ,
     if not college:
         raise HTTPException(status_code=404,detail="College not found")
     
-    if name is not None:
+    if name:
         college.name = name
 
-    if college_email is not None:
+    if college_email:
         college.college_email = college_email
 
-    if code is not None:
+    if code:
         college.code = code
 
-    if city is not None:
+    if city:
         college.city = city
 
-    if state is not None:
+    if state:
         college.state = state
 
-    if country is not None:
+    if country:
         college.country = country
 
     db.commit()
