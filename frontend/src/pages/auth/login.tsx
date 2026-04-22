@@ -41,7 +41,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-full flex gap-4 p-4">
-      <div className="w-1/2 h-full rounded-xl bg-[url('/login_bg.jpg')] bg-no-repeat bg-center bg-cover px-6 py-4 flex flex-col justify-between">
+      <div className="w-1/2 h-full rounded-xl bg-[url('/login_bg.jpg')] bg-no-repeat bg-center bg-cover px-6 py-4 hidden lg:flex flex-col justify-between">
         <img src="/logo.png" alt="Logo" className="size-16" />
         <div className="w-full text-white space-y-2">
           <p className="text-sm text-white/70">Seamless access</p>
@@ -50,17 +50,19 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <div className="w-1/2 h-full flex flex-col items-center justify-center gap-10">
+      <div className="w-full lg:w-1/2 h-full flex flex-col items-center justify-center gap-10">
         <div className="space-y-2 flex justify-center flex-col items-center">
           <img src="/logo_dark.png" alt="Logo" className="size-10" />
-          <h3 className="text-3xl font-bold">Sign in to your account</h3>
-          <p className="text-sm text-black/40 w-1/2 text-center">
+          <h3 className="text-xl md:text-3xl font-bold">
+            Sign in to your account
+          </h3>
+          <p className="text-xs md:text-sm md:w-1/2 text-black/40 text-center">
             Use your institutional credentials to securely access all academic
             services and resources
           </p>
         </div>
         <form
-          className="w-full max-w-1/2 px-6 flex flex-col items-center justify-center"
+          className="w-full md:max-w-1/2 px-6 flex flex-col items-center justify-center"
           onSubmit={handleSubmit}
           noValidate
         >
@@ -69,7 +71,7 @@ const Login = () => {
               <input
                 type="text"
                 placeholder="Enter your email"
-                className="focus:outline-0 placeholder:text-sm placeholder:text-black/40 py-2 border border-black/30 rounded-xl px-4 w-full"
+                className="focus:outline-0 placeholder:text-xs md:placeholder:text-sm placeholder:text-black/40 py-2 border border-black/30 rounded-xl px-4 w-full"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 aria-invalid={!!errors.email}
@@ -91,7 +93,7 @@ const Login = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
-                  className="focus:outline-0 placeholder:text-sm placeholder:text-black/40 py-2 border border-black/30 rounded-xl px-4 pr-22 w-full"
+                  className="focus:outline-0  placeholder:text-xs md:placeholder:text-sm placeholder:text-black/40 py-2 border border-black/30 rounded-xl px-4 pr-22 w-full"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   aria-invalid={!!errors.password}
@@ -123,7 +125,7 @@ const Login = () => {
                 </p>
               )}
 
-              <p className="text-sm underline text-black/30 text-right mt-1 cursor-pointer">
+              <p className="text-xs lg:text-sm underline text-black/30 text-right mt-1 cursor-pointer">
                 <a href="#">Forgot Password?</a>
               </p>
             </div>
@@ -136,13 +138,15 @@ const Login = () => {
           </div>
           <div className="flex gap-4 w-full mt-10 items-center justify-center text-black/40">
             <span className="w-full h-1 border-b border-black/20"></span>
-            <span className="text-xs w-full">or continue with</span>
+            <span className="text-xs w-full whitespace-nowrap">
+              or continue with
+            </span>
             <span className="w-full h-1 border-b border-black/20"></span>
           </div>
 
           <button
             onClick={(e) => e.preventDefault()}
-            className="w-1/3 cursor-pointer flex items-center justify-center mt-5 bg-black/10 active:bg-black/20 py-2 rounded-xl transition-colors duration-100"
+            className="w-1/2 lg:w-1/3 cursor-pointer flex items-center justify-center mt-5 bg-black/10 active:bg-black/20 py-2 rounded-xl transition-colors duration-100"
             type="button"
           >
             <img src="/google_logo.png" alt="Google Logo" className="size-5" />
