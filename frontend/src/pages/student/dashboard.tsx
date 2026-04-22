@@ -1,5 +1,15 @@
-const StudentDashboard = () => {
-  return <div>StudentDashboard</div>;
-};
+import Sidebar from "../../components/student/sidebar"
 
-export default StudentDashboard;
+const StudentDashboard = () => {
+	
+	
+	return (
+		<div className="w-full h-full">
+			<Sidebar />
+		</div>
+	)
+}
+
+export default StudentDashboard
+
+

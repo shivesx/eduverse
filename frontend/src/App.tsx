@@ -1,5 +1,14 @@
+import StudentDashboard from "./pages/student/dashboard";
+
 const App = () => {
-  return <div></div>;
+  return <div className="">
+
+
+
+
+    
+    <StudentDashboard />
+  </div>;
 };
 
 export default App;
