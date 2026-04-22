@@ -1,5 +1,5 @@
 import { EyeClosed, Eye } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const validateEmail = (email: string) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
