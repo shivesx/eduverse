@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth_router
 from app.routers import user_router
 from app.routers import college_router
+from app.routers import event_router
 
 
 
@@ -27,3 +28,4 @@ def home():
 app.include_router(auth_router.router)
 app.include_router(user_router.router)
 app.include_router(college_router.router)
+app.include_router(event_router.router)
