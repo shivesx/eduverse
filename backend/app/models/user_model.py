@@ -1,6 +1,5 @@
-from sqlalchemy import Column , Integer , String 
+from sqlalchemy import Column , Integer , String ,Boolean , DateTime
 from app.db.database import Base
-
 
 class User(Base):
     __tablename__="users"
@@ -16,3 +15,10 @@ class User(Base):
     course=Column(String)
     branch=Column(String)
     address=Column(String)
+
+
+    is_verified = Column(Boolean, default=False)
+    otp = Column(String, nullable=True)
+    otp_expiry = Column(DateTime, nullable=True)
+    otp_attempts = Column(Integer, default=0)
+    # kidhweaakbgxkyoo
