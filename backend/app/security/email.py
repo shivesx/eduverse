@@ -1,9 +1,13 @@
 import smtplib
 from email.mime.text import MIMEText
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-EMAIL="shiveshpatel853@gmail.com"
-PASSWORD="kidhweaakbgxkyoo"
+EMAIL=os.getenv("EMAIL")
+PASSWORD=os.getenv("PASSWORD")
+
 
 def send_otp_email(to_email:str,otp:str):
     subject="Email Verification OTP"
