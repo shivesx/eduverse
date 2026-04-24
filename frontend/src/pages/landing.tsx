@@ -1,7 +1,5 @@
 const Landing = () => {
-  return (
-    <div>Landing</div>
-  )
-}
+  return <div className="">Landing</div>;
+};
 
-export default Landing
+export default Landing;
