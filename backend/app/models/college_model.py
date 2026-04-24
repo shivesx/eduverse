@@ -14,3 +14,5 @@ class College(Base):
     state=Column(String,nullable=False)
     country=Column(String,nullable=False)
 
+events=Relationship("Event",back_populates="college")
+

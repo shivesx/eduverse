@@ -4,6 +4,7 @@ from app.db.database import get_db
 from app.models.subject_model import Subject
 from app.schemas.subject_schemas import SubjectCreate,SubjectResponse
 from app.security.depen import get_current_user
+from datetime import datetime
 
 
 router=APIRouter(prefix="/subject",tags=["Subject"])
@@ -17,12 +18,12 @@ def get_all_subject( current_user=Depends(get_current_user), db:Session=Depends(
     if current_user.role!="admin":
         raise HTTPException(status_code=403, detail="Only Admin Access!")
 
-    subject=db.query(Subject).all()
+    subjects=db.query(Subject).all()
 
-    if not subject:
+    if not subjects:
         raise HTTPException(status_code=404,detail="No subject found")
 
-    return subject
+    return subjects
 
 
 # get subject by id 
@@ -75,7 +76,7 @@ def delete_subject(subject_id:int,current_user=Depends(get_current_user),db:Sess
     subject=db.query(Subject).filter(Subject.id==subject_id).first()
 
     if not subject:
-        raise HTTPException(status_code=404,detail="College not found")
+        raise HTTPException(status_code=404,detail="Subject not found")
     
     db.delete(subject)
     db.commit()
@@ -85,48 +86,48 @@ def delete_subject(subject_id:int,current_user=Depends(get_current_user),db:Sess
 
 # update subject data
 
-@router.patch("/update/{college_id}",response_model=SubjectResponse)
+@router.patch("/update/{subject_id}",response_model=SubjectResponse)
 
-def update_college(college_id:int ,
+def update_subject(subject_id:int ,
                    name:str | None=Form(None),
-                    college_email:str | None=Form(None),
-                     code:str | None=Form(None),
-                        city:str | None=Form(None),
-                            state:str | None=Form(None),
-                                country:str | None=Form(None),
+                    code:int | None=Form(None),
+                    semester:int | None=Form(None),
+                        college_id:int | None=Form(None),
+                            credits:int | None=Form(None),
+                                created_at:datetime | None=Form(None),
                                     current_user=Depends(get_current_user),
                                         db:Session=Depends(get_db)):
     
     if current_user.role!="admin":
-        raise HTTPException(status_code=401, detail="Only Admin Access!")
+        raise HTTPException(status_code=403, detail="Only Admin Access!")
                  
 
-    college=db.query(College).filter(College.id==college_id).first()
+    subject=db.query(Subject).filter(Subject.id==subject_id).first()
 
-    if not college:
-        raise HTTPException(status_code=404,detail="College not found")
+    if not subject:
+        raise HTTPException(status_code=404,detail="Subject not found")
     
     if name is not None:
-        college.name = name
-
-    if college_email is not None:
-        college.college_email = college_email
+        subject.name = name
 
     if code is not None:
-        college.code = code
+        subject.code = code
 
-    if city is not None:
-        college.city = city
+    if semester is not None:
+        subject.semester = semester
 
-    if state is not None:
-        college.state = state
+    if college_id is not None:
+        subject.college_id = college_id
 
-    if country is not None:
-        college.country = country
+    if credits is not None:
+        subject.credits = credits
+
+    if created_at is not None:
+        subject.created_at = created_at
 
     db.commit()
-    db.refresh(college)
+    db.refresh(subject)
    
 
-    return college
+    return subject
 
