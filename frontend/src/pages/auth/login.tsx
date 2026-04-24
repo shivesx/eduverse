@@ -1,4 +1,3 @@
-import { EyeClosed, Eye } from "lucide-react";
 import React, { useState } from "react";
 
 const validateEmail = (email: string) => {
@@ -6,9 +5,9 @@ const validateEmail = (email: string) => {
 };
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [step, setStep] = useState<"email" | "otp">("email");
+  const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {},
   );
@@ -26,21 +25,17 @@ const Login = () => {
       valid = false;
     }
 
-    if (!password) {
-      newErrors.password = "Password is required";
-      valid = false;
-    }
-
     setErrors(newErrors);
 
     if (valid) {
-      // Proceed to submit the form or call an API
+      // Proceed to submit the sform or call an API
       // For now just clear errors
+      setStep("otp");
     }
   };
 
   return (
-    <div className="w-full h-full flex gap-4 p-4">
+    <div className="w-full h-screen flex gap-4 p-4">
       <div className="w-1/2 h-full rounded-xl bg-[url('/login_bg.jpg')] bg-no-repeat bg-center bg-cover px-6 py-4 hidden lg:flex flex-col justify-between">
         <img src="/logo.png" alt="Logo" className="size-16" />
         <div className="w-full text-white space-y-2">
@@ -67,74 +62,51 @@ const Login = () => {
           noValidate
         >
           <div className="flex flex-col gap-4">
-            <div>
-              <input
-                type="text"
-                placeholder="Enter your email"
-                className="focus:outline-0 placeholder:text-xs md:placeholder:text-sm placeholder:text-black/40 py-2 border border-black/30 rounded-xl px-4 w-full"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                aria-invalid={!!errors.email}
-                aria-describedby={errors.email ? "email-error" : undefined}
-                autoComplete="email"
-              />
-              {errors.email && (
-                <p
-                  id="email-error"
-                  className="text-xs text-red-500 mt-1 ml-4"
-                  role="alert"
+            {step === "email" && (
+              <>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Enter your email"
+                    className="focus:outline-0 text-xs md:text-sm placeholder:text-black/40 py-2 border border-black/30 rounded-xl px-4 w-full"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full shadow-xl bg-[#538FA1] text-white py-2 rounded-xl"
                 >
-                  {errors.email}
-                </p>
-              )}
-            </div>
-            <div>
-              <span className="relative w-full block">
+                  Send OTP
+                </button>
+              </>
+            )}
+
+            {step === "otp" && (
+              <>
                 <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  className="focus:outline-0  placeholder:text-xs md:placeholder:text-sm placeholder:text-black/40 py-2 border border-black/30 rounded-xl px-4 pr-22 w-full"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  aria-invalid={!!errors.password}
-                  aria-describedby={
-                    errors.password ? "password-error" : undefined
-                  }
-                  autoComplete="current-password"
+                  type="text"
+                  placeholder="Enter OTP"
+                  className="focus:outline-0 text-xs md:text-sm py-2 border border-black/30 rounded-xl px-4 w-full"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
                 />
+
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowPassword((prev) => !prev);
-                  }}
-                  className="text-black/50 absolute right-3 top-1/2 -translate-y-1/2 p-0 m-0 bg-transparent border-none outline-none flex items-center justify-center cursor-pointer"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  tabIndex={-1}
-                >
-                  {showPassword ? <EyeClosed size={18} /> : <Eye size={18} />}
-                </button>
-              </span>
-              {errors.password && (
-                <p
-                  id="password-error"
-                  className="text-xs text-red-500 mt-1 ml-4"
-                  role="alert"
-                >
-                  {errors.password}
-                </p>
-              )}
+                  className="w-full shadow-xl bg-[#538FA1] text-white py-2 rounded-xl"
+                  onClick={() => {
+                    // verify OTP (backend later)
 
-              <p className="text-xs lg:text-sm underline text-black/30 text-right mt-1 cursor-pointer">
-                <a href="#">Forgot Password?</a>
-              </p>
-            </div>
-            <button
-              type="submit"
-              className="w-full shadow-xl bg-[#538FA1] active:bg-[#3D7A8F] text-white py-2 rounded-xl cursor-pointer transition-colors duration-100"
-            >
-              Login
-            </button>
+                    // 👇 TEMP redirect (for now)
+                    window.location.href = "/student/dashboard";
+                  }}
+                >
+                  Verify OTP
+                </button>
+              </>
+            )}
           </div>
           <div className="flex gap-4 w-full mt-10 items-center justify-center text-black/40">
             <span className="w-full h-1 border-b border-black/20"></span>
