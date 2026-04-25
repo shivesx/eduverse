@@ -4,10 +4,10 @@ from app.db.database import get_db
 from app.schemas.fees_schemas import FeesResponse,CreateFees
 from app.models.fees_model import Fees
 from app.security.depen import get_current_user
+from app.models.payment_model import Payment
 
 
 router=APIRouter(prefix="/fees",tags=["Fees"])
-
 
 
 # get my fees
@@ -103,6 +103,29 @@ def add_fees(fees:CreateFees,current_user=Depends(get_current_user),db:Session=D
     return new_fees
 
 
+# delet fees
 
+
+@router.delete("/{fees_id}")
+def delete_fees(fees_id: int, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only Admin Access!")
+
+    fees = db.query(Fees).filter(Fees.id == fees_id).first()
+
+    if not fees:
+        raise HTTPException(status_code=404, detail="Fees not found")
+
+    # check payment
+    payment = db.query(Payment).filter(Payment.fees_id == fees_id).first()
+
+    if payment:
+        raise HTTPException(status_code=400, detail="Cannot delete fees with payments")
+
+    db.delete(fees)
+    db.commit()
+
+    return {"message": "Fees deleted successfully"}
 
 
