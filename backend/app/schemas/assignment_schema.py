@@ -8,7 +8,7 @@ class CreateAssignment(BaseModel):
     obtained_marks: int
     due_date: str
     file_url: str
-    college_id: int
+    user_assignment_id: int
 
 
 class UpdateAssignment(BaseModel):
@@ -19,7 +19,7 @@ class UpdateAssignment(BaseModel):
     obtained_marks: int
     due_date: str
     file_url: str
-    college_id: int
+    user_assignment_id: int
 
 
 class AssignmentResponse(BaseModel):
@@ -32,5 +32,5 @@ class AssignmentResponse(BaseModel):
     assigned_date: str
     due_date: str
     file_url: str
-    college_id: int
+    user_assignment_id: int
     created_at: str

@@ -20,7 +20,7 @@ class Assignment(Base):
 
     file_url = Column(String, nullable=True)
 
-    college_id = Column(Integer, ForeignKey("colleges.id"), nullable=False)
+    user_assignment_id = Column(Integer, ForeignKey("user.id"), nullable=False)
 
     created_at = Column(DateTime, default=datetime.utcnow)
 

@@ -37,7 +37,7 @@ def get_assignment_by_id(assignment_id: int, db: Session = Depends(get_db)):
 @router.post("/create", response_model=CreateAssignment)
 def create_assignment(assignment: CreateAssignment, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
 
-    if current_user.role != "user":
+    if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can create assignments")
 
     new_assignment = Assignment(
@@ -48,7 +48,7 @@ def create_assignment(assignment: CreateAssignment, current_user=Depends(get_cur
         obtained_marks=assignment.obtained_marks,
         due_date=assignment.due_date,
         file_url=assignment.file_url,
-        college_id=assignment.college_id
+        user_assignment_id=assignment.user_assignment_id
     )
 
     db.add(new_assignment)
@@ -63,7 +63,7 @@ def create_assignment(assignment: CreateAssignment, current_user=Depends(get_cur
 @router.patch("/update/{assignment_id}", response_model=UpdateAssignment)
 def update_assignment(assignment_id: int, assignment: UpdateAssignment, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
 
-    if current_user.role != "user":
+    if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can update assignments")
 
     existing_assignment = db.query(Assignment).filter(Assignment.id == assignment_id).first()
@@ -85,7 +85,7 @@ def update_assignment(assignment_id: int, assignment: UpdateAssignment, current_
 @router.delete("/delete/{assignment_id}")
 def delete_assignment(assignment_id: int, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
 
-    if current_user.role != "user":
+    if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can delete assignments")
 
     assignment = db.query(Assignment).filter(Assignment.id == assignment_id).first()
